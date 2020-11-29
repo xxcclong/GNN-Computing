@@ -12,7 +12,7 @@
 * Python packages
   * DGL 0.4.3post2: pip3 install dgl-cu101==0.4.3post2
   * Pytorch 1.6.0: pip3 install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
-  * torch_scatter 2.0.4: pip3 install torch-scatter==2.0.5+cu101 -f https://pytorch-geometric.com/whl/torch-1.6.0.html
+  * torch_scatter 2.0.5: pip3 install torch-scatter==2.0.5+cu101 -f https://pytorch-geometric.com/whl/torch-1.6.0.html
   * matplotlib # for figure generation
   * seaborn # for figure generation
 
