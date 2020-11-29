@@ -13,6 +13,7 @@
   * DGL 0.4.3post2: pip3 install dgl-cu101==0.4.3post2
   * Pytorch 1.6.0: pip3 install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
   * torch_scatter 2.0.5: pip3 install torch-scatter==2.0.5+cu101 -f https://pytorch-geometric.com/whl/torch-1.6.0.html
+  * datasketch 1.5.1 
   * matplotlib # for figure generation
   * seaborn # for figure generation
 
@@ -126,6 +127,14 @@ python3 draw_fig10b.py # get fig10b.pdf
 cd Figure11
 ./run.sh
 python3 draw_fig11.py # get fig11.pdf
+```
+
+#### Preprocessing graph
+
+```bash
+cd script
+python3 cluster2.py arxiv # can replace arxiv with other dataset names
+# the reorder file will be in data/arxiv_new_reorder_thres_0.2
 ```
 
 ### Contact
