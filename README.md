@@ -13,6 +13,8 @@
   * DGL 0.4.3post2: pip3 install dgl-cu101==0.4.3post2
   * Pytorch 1.6.0: pip3 install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
   * torch_scatter 2.0.4: pip3 install torch-scatter==2.0.5+cu101 -f https://pytorch-geometric.com/whl/torch-1.6.0.html
+  * matplotlib # for figure generation
+  * seaborn # for figure generation
 
 #### Hardware
 
@@ -27,7 +29,7 @@ cd ppopp20_artifact
 #### Get the code
 
 ```bash
-git clone ...
+git clone git@github.com:xxcclong/GNN-Computing.git
 ```
 
 #### Setting up
@@ -36,7 +38,7 @@ git clone ...
 cd artifact
 mkdir build && cd build
 cmake ..
-make all -j16
+make -j16
 cp fig7.out ../Figure7/
 cp fig8.out ../Figure8/
 cp fig9.out ../Figure9/
@@ -50,7 +52,7 @@ cp fig11.out ../Figure11/
 ```bash
 # get the compressed data
 # put them into artifact/data/
-wget https://cloud.tsinghua.edu.cn/f/2eebc696ce054681a6a4/?dl=1
+wget -O data.zip https://cloud.tsinghua.edu.cn/f/2eebc696ce054681a6a4/?dl=1
 unzip data.zip
 ```
 
@@ -74,7 +76,7 @@ For every dataset (taking `arxiv` for example), we have
 
 * arxiv.config: with some graph information, such as the number of nodes and edges.
 * arxiv.graph: two lines, the first line has the poiters of the range of the neighbors, the second line has the neighbor indexes. (similar to CSR format)
-* arxiv.reorder_thres_0.2: the preprocessed reorder file, containing the number from `0` to `num_v - 1`, indicating the new node order of the graph.
+* arxiv.reorder_thres_0.2: the preprocessed reorder file, containing the number of `0` to `num_v - 1`, indicating the new node order of the graph.
 
 
 ### Reproduce
