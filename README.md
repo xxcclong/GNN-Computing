@@ -1,5 +1,7 @@
 ## Artifact for Understanding and Bridging the Gaps in Current GNN Performance Optimizations
 
+archival repository: https://doi.org/10.6084/m9.figshare.13309502.v1
+
 ### Getting started
 
 #### Environment
