@@ -22,12 +22,6 @@ archival repository: https://doi.org/10.6084/m9.figshare.13309502.v1
 #### Hardware
 
 * Tesla V100-PCIE-32GB
-* Or can use provided server
-```bash
-ssh huangkz@166.111.68.163 -p 2222 # passwd:tmp1688
-ssh ppopp_ae@nico2 # passwd:ppopp20
-cd ppopp20_artifact
-```
 
 #### Get the code
 
