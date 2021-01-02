@@ -23,9 +23,11 @@ void GCN_update_val_impl(int64_t at, float *val)
 	((Aggregator_GCN *)at)->updateval(val);
 }
 
-void GCN_run_impl(int64_t at, float *feat, float *out_feat, int blocksize, int scheduled)
+void GCN_run_impl(int64_t at, float *feat, float *out_feat, int blocksize, int scheduled, int featlen)
 {
-	((Aggregator_GCN *)at)->run(feat, out_feat, blocksize, scheduled);
+	// dbg(featlen);
+	((Aggregator_GCN *)at)->run_with_feat(feat, out_feat, blocksize, scheduled, featlen);
+	// dbg(featlen);
 	return;
 }
 
@@ -42,9 +44,9 @@ int64_t GAT_init_impl(int* ptr, int* idx, int num_v, int num_e)
     return (int64_t)at;
 }
 
-void GAT_run_impl(int64_t at, float *feat, float* att, float *out_feat, int blocksize, int scheduled)
+void GAT_run_impl(int64_t at, float *feat, float* att, float *out_feat, int blocksize, int scheduled, int featlen)
 {
-	((Aggregator_GAT *)at)->run(feat, att, out_feat, blocksize, scheduled);
+	((Aggregator_GAT *)at)->run_with_feat(feat, att, out_feat, blocksize, scheduled, featlen);
 }
 
 void GAT_run_u_add_v_impl(int64_t at, float* att, float* outval, int blocksize)

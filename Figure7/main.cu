@@ -211,7 +211,7 @@ int main(int argc, char ** argv)
                 &beta, 
                 ptr[g2], n));
                 //ptr[g2] + (iter + 1) * n * feature_len * 4, n));
-        checkCudaErrors(cudaDeviceSynchronize());
+            //checkCudaErrors(cudaDeviceSynchronize());
             kernel_elementwise_lstm_forward <<< (n * feature_len + BLOCK_SIZE - 1)/ BLOCK_SIZE, BLOCK_SIZE >>>
             (
                 ptr[x_transformed], 
@@ -227,7 +227,7 @@ int main(int argc, char ** argv)
                 NEIGHBOR_NUM,
                 iter
             );
-        checkCudaErrors(cudaDeviceSynchronize());
+            //checkCudaErrors(cudaDeviceSynchronize());
         }
         checkCudaErrors(cudaDeviceSynchronize());
         timestamp(t1);

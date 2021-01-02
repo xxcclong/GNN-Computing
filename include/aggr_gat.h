@@ -352,6 +352,46 @@ public:
         // return getDuration(t0, t1);
         return 0.0;
     }
+    double run_with_feat(float *vin, float *vatt, float *vout, int BLOCK_SIZE, bool scheduled, int feat)
+    {
+        feat_in = feat;
+        if (BLOCK_SIZE < feat_in) BLOCK_SIZE = feat_in;
+        int tmp_target_in_block = BLOCK_SIZE / feat_in;
+
+        int shared_size = 0;
+
+        dim3 grid((num_v + tmp_target_in_block - 1) / tmp_target_in_block);
+        dim3 block(BLOCK_SIZE / (feat_in / 32), feat_in / 32);
+        // float* newval = NULL;
+
+        if (scheduled)
+        {
+            // dbg(num_target);
+            grid.x = (num_target + tmp_target_in_block - 1) / tmp_target_in_block;
+            shared_size = neighbor_group_size * 2 * tmp_target_in_block * sizeof(int);
+            // assert(d_ptr_scheduled != NULL);
+            // checkCudaErrors(cudaMemset(vout, 0, num_v * feat_out * sizeof(float)));
+            // checkCudaErrors(cudaMalloc2((void**)&newval, num_e * sizeof(int)));
+        }
+
+        if (scheduled)
+        {
+            aggr_gat_fine<<<grid, block, shared_size>>>(d_ptr_scheduled, d_idx_scheduled, d_target_scheduled, /*newval*/ d_newval, vin, vout, scalar, vatt,  num_target, feat_in, neighbor_group_size, 0.2f);
+            scaleArray <<< (num_v * feat_in + 256 - 1) / 256, 256 >>>
+                (vout, scalar, feat_in, num_v);
+            // testGPUBuffer(0, scalar);
+            // testGPUBuffer(0, d_newval);
+        }
+        else
+        {
+            aggr_gat<<<grid, block, shared_size>>>(d_ptr, d_idx, d_val, vin, vout, vatt, num_v, feat_in, 0.2f);
+        }
+        // checkCudaErrors(cudaDeviceSynchronize());
+        // timestamp(t1);
+        // dbg(getDuration(t0, t1));
+        // return getDuration(t0, t1);
+        return 0.0;
+    }
     void run_att(float* in_att, float* out_val, int BLOCK_SIZE)
     {
         int tmp_target_in_block = BLOCK_SIZE / 32; // 32 threads in a warp

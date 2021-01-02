@@ -179,7 +179,11 @@ def main(args):
     def gat_layer_ours(feat, output_feat, weight, weight_lr):
         feat2 = torch.mm(feat, weight)
         att_lr = torch.mm(feat2, weight_lr)
-        gnc.gat_run(at_gat, feat, att_lr, output_feat, 128, 1)
+        #print(feat.shape)
+        #print(output_feat.shape)
+        #print(att_lr.shape)
+        #print("---")
+        gnc.gat_run(at_gat, feat2, att_lr, output_feat, 128, 1)
         torch.cuda.synchronize()
         return output_feat
 

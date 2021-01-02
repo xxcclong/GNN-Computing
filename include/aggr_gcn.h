@@ -408,6 +408,40 @@ public:
         // timestamp(t1);
         return 0.0;
     }
+    double run_with_feat(float *vin, float *vout, int BLOCK_SIZE, bool scheduled, int feat) 
+    {
+        feat_in = feat;
+        if (BLOCK_SIZE < feat_in) BLOCK_SIZE = feat_in;
+        int tmp_target_in_block = BLOCK_SIZE / feat_in;
+
+        int shared_size = 0;
+
+        dim3 grid((num_v + tmp_target_in_block - 1) / tmp_target_in_block);
+        dim3 block(BLOCK_SIZE / (feat_in / 32), feat_in / 32);
+
+        if (scheduled)
+        {
+            grid.x = (num_target + tmp_target_in_block - 1) / tmp_target_in_block;
+            shared_size = neighbor_group_size * 2 * tmp_target_in_block * sizeof(int);
+            assert(d_ptr_scheduled != NULL);
+            checkCudaErrors(cudaMemset(vout, 0, num_v * feat_out * sizeof(float)));
+        }
+
+        // checkCudaErrors(cudaDeviceSynchronize());
+        // timestamp(t0);
+        if (scheduled)
+        {
+            aggr_gcn_target<<<grid, block, shared_size>>>(d_ptr_scheduled, d_idx_scheduled, d_val_scheduled, d_target_scheduled, vin, vout, num_target, feat_in, neighbor_group_size);
+        }
+        else
+        {
+            aggr_gcn<<<grid, block, shared_size>>>(d_ptr, d_idx, d_val, vin, vout, num_v, feat_in);
+            // aggr_gcn_shared<<<grid, block, BLOCK_SIZE * 2 * sizeof(float)>>>(d_ptr, d_idx, d_val, vin, vout, num_v, feat_in);
+        }
+        // checkCudaErrors(cudaDeviceSynchronize());
+        // timestamp(t1);
+        return 0.0;
+    }
     double runEdgeWise(float *vin, float *vout, int BLOCK_SIZE, bool scheduled) override
     {
         checkCudaErrors(cudaMemset(vout, 0, num_v * feat_out * sizeof(float)));

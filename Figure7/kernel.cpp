@@ -16,13 +16,13 @@ int64_t GCN_init_impl(int *ptr, int *idx, float *val, int num_v, int num_e);
 
 void GCN_update_val_impl(int64_t at, float *val);
 
-void GCN_run_impl(int64_t at, float *feat, float *out_feat, int blocksize, int scheduled);
+void GCN_run_impl(int64_t at, float *feat, float *out_feat, int blocksize, int scheduled, int featlen);
 
 void GCN_schedule_impl(int64_t at, int *arr);
 
 int64_t GAT_init_impl(int *ptr, int *idx, int num_v, int num_e);
 
-void GAT_run_impl(int64_t at, float *feat, float *att, float *out_feat, int blocksize, int scheduled);
+void GAT_run_impl(int64_t at, float *feat, float *att, float *out_feat, int blocksize, int scheduled, int featlen);
 
 void GAT_run_u_add_v_impl(int64_t at, float* att, float* outval, int blocksize);
 
@@ -97,7 +97,7 @@ void GCN_run(
     int blocksize,
     int scheduled)
 {
-  GCN_run_impl(at, feat.data<float>(), outfeat.data<float>(), blocksize, scheduled);
+  GCN_run_impl(at, feat.data<float>(), outfeat.data<float>(), blocksize, scheduled, feat.size(1));
 }
 
 void GCN_schedule(
@@ -124,7 +124,7 @@ void GAT_run(
     int blocksize,
     int scheduled)
 {
-  GAT_run_impl(at, feat.data<float>(), att.data<float>(), outfeat.data<float>(), blocksize, scheduled);
+  GAT_run_impl(at, feat.data<float>(), att.data<float>(), outfeat.data<float>(), blocksize, scheduled, feat.size(1));
 }
 
 void GAT_run_u_add_v(
