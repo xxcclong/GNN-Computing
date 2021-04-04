@@ -1,7 +1,5 @@
 ## Artifact for Understanding and Bridging the Gaps in Current GNN Performance Optimizations
 
-archival repository: https://doi.org/10.6084/m9.figshare.13309502.v1
-
 ### Getting started
 
 #### Environment
@@ -134,6 +132,11 @@ cd script
 python3 cluster2.py arxiv # can replace arxiv with other dataset names
 # the reorder file will be in data/arxiv_new_reorder_thres_0.2
 ```
+
+### Publication
+
+Kezhao Huang, Jidong Zhai, Zhen Zheng, Youngmin Yi, and Xipeng Shen. 2021. Understanding and Bridging the Gaps in Current GNN Performance Optimizations. In Proceedings of PPoPP ’21: 26rd ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming, Virtual Event, Republic of Korea,  February 27–March 3, 2021 (PPoPP'21), 14 pages. https://doi.org/10.1145/3437801.3441585 
+
 
 ### Contact
 
