@@ -44,7 +44,8 @@ def main(args):
     torch.cuda.set_device(cudaid)
     basedir = "../data/"
     cachedir = "../data_pyg/"
-
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
     edgeindex = [[],[]]
     cachefile = cachedir + filename + ".pkl"
     configf = open(basedir + filename + ".config", "r")
