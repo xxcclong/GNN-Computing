@@ -109,9 +109,9 @@ def main(args):
         feat2 = torch.mm(feat, weight)
         att_l = torch.mm(feat2, attn_l)
         att_r = torch.mm(feat2, attn_r)
-        att_l_edge = torch.index_select(att_l, 0, edgeindex[1])
+        att_l_edge = torch.index_select(att_l, 0, edgeindex[0])
         att_r_edge = torch.index_select(att_r, 0, edgeindex[1])
-        att = att_l_edge + att_r_edge
+        att = torch.exp(F.leaky_relu(att_l_edge + att_r_edge, 0.1))
         att = att / (scatter_add(att, edgeindex[0], dim=0, dim_size=num_v)[edgeindex[0]] + 1e-16)
         src = torch.index_select(feat2, 0, edgeindex[1]) * (att.view(-1, 1))
         output = torch.zeros(feat2.shape, dtype=src.dtype, device=src.device)
