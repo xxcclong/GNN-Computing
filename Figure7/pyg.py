@@ -115,7 +115,7 @@ def main(args):
         att = att / (scatter_add(att, edgeindex[0], dim=0, dim_size=num_v)[edgeindex[0]] + 1e-16)
         src = torch.index_select(feat2, 0, edgeindex[1]) * (att.view(-1, 1))
         output = torch.zeros(feat2.shape, dtype=src.dtype, device=src.device)
-        output = F.leaky_relu(scatter_sum(src, edgeindex[0], 0, output), 0.1)
+        output = scatter_sum(src, edgeindex[0], 0, output)
         torch.cuda.synchronize()
 
         t0 = time.time()
